@@ -8,7 +8,7 @@ export const Top = () => {
         <wbr />
         念系統を診断
       </h1>
-      <p class="text-xl text-purple-100 break-normal whitespace-nowrap">
+      <p class="text-xl text-purple-100 break-keep">
         MBTIタイプから、
         <wbr />
         Hunter x Hunterの念系統を判定します
