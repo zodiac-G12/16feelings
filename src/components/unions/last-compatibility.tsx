@@ -45,8 +45,8 @@ const rateColor = ({ rate }: { rate: `${number}%` }) => {
 export const LastCompatibility = ({ nenName }: { nenName: Nen }) => {
   return (
     <div class="flex justify-center">
-      <div class="flex flex-col w-1/3 p-6 gap-14 rounded-2xl bg-black/30">
-        <div class="flex items-center text-2xl gap-2">
+      <div class="flex flex-col w-5/6 p-6 lg:w-1/3 gap-4 lg:gap-14 rounded-2xl bg-black/30">
+        <div class="flex items-center text-lg lg:text-2xl gap-2">
           <PizaIcon />
           <span>他系統との相性</span>
         </div>
@@ -54,7 +54,7 @@ export const LastCompatibility = ({ nenName }: { nenName: Nen }) => {
           <For each={NENS.filter(exclude(nenName))}>
             {(nen) => (
               <div
-                class={`flex flex-col w-[30%] p-4 gap-1 rounded-xl ${rateColor({ rate: getRate({ myNen: nenName, nen }) })?.border} ${rateColor({ rate: getRate({ myNen: nenName, nen }) })?.background}`}
+                class={`flex flex-col w-5/6 lg:w-[30%] p-4 gap-1 rounded-xl ${rateColor({ rate: getRate({ myNen: nenName, nen }) })?.border} ${rateColor({ rate: getRate({ myNen: nenName, nen }) })?.background}`}
               >
                 <div class="flex justify-between text-white/90">
                   <div>{nen}</div>

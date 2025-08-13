@@ -5,10 +5,16 @@ import { Accessor } from "solid-js";
 export const DiagButton = ({ mbti }: { mbti: Accessor<string> }) => {
   const navigate = useNavigate();
 
+  const selectedClass =
+    "flex items-center py-4 text-white border-gray-200 rounded-full px-7 gap-2 bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-[linear-gradient(0deg, #667eea 0.00%, #764ba2 100.0%)]";
+  const disabledClass =
+    "flex items-center py-4 text-white border-gray-200 rounded-full px-7 gap-2 bg-gray-300";
+
   return (
     <div id="DiagButton">
       <button
-        class="rounded-full border-gray-200 px-7 py-4 text-white flex items-center gap-2 bg-gradient-to-r from-[#667eea] to-[#764ba2] bg-[linear-gradient(0deg, #667eea 0.00%, #764ba2 100.0%)]"
+        disabled={!mbti()}
+        class={mbti() ? selectedClass : disabledClass}
         onClick={() => navigate(`/nens/${mbti()}`)}
       >
         <DiagIcon />

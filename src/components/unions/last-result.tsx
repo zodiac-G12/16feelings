@@ -23,8 +23,8 @@ export const LastResult = ({
 }) => {
   return (
     <div class="flex justify-center">
-      <div class="flex flex-col items-center w-1/3 px-8 pt-8 pb-16 border gap-6 border-purple-400/20 rounded-2xl bg-white/5">
-        <div class="flex justify-center items-center shadow-[0px_25px_50px_0px_rgba(255,255,255,0.10)] rounded-full w-32 h-32 border-0 border-gray-200 bg-gradient-to-r from-[#6b46c1] to-[#6b21a8] bg-[linear-gradient(0deg,#6b46c1_0%,#6b21a8_100%)]">
+      <div class="flex flex-col items-center w-5/6 px-4 py-4 border lg:pt-8 lg:pb-16 lg:px-8 lg:w-1/3 gap-4 lg:gap-6 border-purple-400/20 rounded-2xl bg-white/5">
+        <div class="flex justify-center items-center shadow-[0px_25px_50px_0px_rgba(255,255,255,0.10)] rounded-full w-25 h-25 lg:w-32 lg:h-32 border-0 border-gray-200 bg-gradient-to-r from-[#6b46c1] to-[#6b21a8] bg-[linear-gradient(0deg,#6b46c1_0%,#6b21a8_100%)]">
           <Show when={nenResult.nenName === "強化系"}>
             <StrengthIcon size="large" color="white" />
           </Show>
@@ -45,17 +45,18 @@ export const LastResult = ({
           </Show>
         </div>
         <div class="flex flex-col items-center justify-center gap-2">
-          <h1 class="text-5xl font-bold">{nenResult.nenName}</h1>
-          <h2 class="text-xl">{nenResult.nenEngName}</h2>
+          <h1 class="text-3xl font-bold lg:text-5xl">{nenResult.nenName}</h1>
+          <h2 class="text-lg lg:text-xl">{nenResult.nenEngName}</h2>
         </div>
-        <div class="text-lg break-all rounded-2xl bg-white/10 p-7">
+        <div class="text-base break-all lg:text-lg rounded-2xl bg-white/10 p-7">
           {NEN_EXPLANATIONS_MAP[nenResult.nenName]}
         </div>
         <div class="flex gap-4">
-          <div class="rounded-xl bg-[#6b46c1]/20 py-2 px-4">
-            MBTI: {mbti()}({getMbtiName(mbti())})
+          <div class="break-keep rounded-xl bg-[#6b46c1]/20 py-2 px-4">
+            MBTI: {mbti()}
+            <wbr />({getMbtiName(mbti())})
           </div>
-          <div class="rounded-xl text-[#d4af37] bg-[#d4af37]/20 py-2 px-4">
+          <div class="rounded-xl text-[#d4af37] bg-[#d4af37]/10 py-2 px-4">
             適合率: {nenResult.precisionRate}
           </div>
         </div>
