@@ -1,5 +1,8 @@
 name: topic-ci
 
+permissions:
+  contents: write # ←これが無いと push できない
+
 on:
   pull_request:
     branches: [main]

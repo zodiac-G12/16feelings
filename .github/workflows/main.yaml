@@ -1,5 +1,8 @@
 name: main-ci
 
+permissions:
+  contents: write # ←これが無いと push できない
+
 on:
   push:
     branches: [main]
