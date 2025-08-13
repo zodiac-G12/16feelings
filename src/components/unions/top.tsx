@@ -9,9 +9,7 @@ export const Top = () => {
         念系統を診断
       </h1>
       <p class="text-xl text-purple-100 break-keep">
-        MBTIタイプから、
-        <wbr />
-        Hunter x Hunterの念系統を判定します
+        MBTIタイプから、 Hunter x Hunterの念系統を判定します
       </p>
       <StartDiagButton />
     </div>

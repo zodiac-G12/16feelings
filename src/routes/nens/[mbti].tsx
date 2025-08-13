@@ -17,7 +17,7 @@ export default function Content() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const mbti = createMemo(() => params.mbti ?? "");
+  const mbti = createMemo(() => params.mbti ?? "", [params]);
 
   const nenResult = createMemo(() => {
     const m = mbti();
