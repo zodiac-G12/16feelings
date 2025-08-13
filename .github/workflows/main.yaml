@@ -21,7 +21,7 @@ jobs:
       - name: build
         run: npm run build
         env:
-          BASE_PATH: /
+          BASE_PATH: /16feelings
 
       - name: create .nojekyll
         run: touch .output/public/.nojekyll
