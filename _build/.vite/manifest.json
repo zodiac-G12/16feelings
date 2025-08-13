@@ -11,7 +11,7 @@
     "name": "routing"
   },
   "src/routes/index.tsx?pick=default&pick=$css": {
-    "file": "assets/index-C-gJkRSF.js",
+    "file": "assets/index-CG8g7wH3.js",
     "name": "index",
     "src": "src/routes/index.tsx?pick=default&pick=$css",
     "isEntry": true,
@@ -33,7 +33,7 @@
     ]
   },
   "virtual:$vinxi/handler/client": {
-    "file": "assets/client-r0vzbLwQ.js",
+    "file": "assets/client-CETClCG3.js",
     "name": "client",
     "src": "virtual:$vinxi/handler/client",
     "isEntry": true,
@@ -45,7 +45,7 @@
       "src/routes/nens/[mbti].tsx?pick=default&pick=$css"
     ],
     "css": [
-      "assets/client-B3-sjqkG.css"
+      "assets/client-B1vpWYeC.css"
     ]
   }
 }
