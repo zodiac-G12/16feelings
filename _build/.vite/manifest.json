@@ -1,48 +1,86 @@
 {
-  "_last-buttons-BOd4vf43.js": {
-    "file": "assets/last-buttons-BOd4vf43.js",
+  "_last-buttons-B_z4IcSq.js": {
+    "file": "assets/last-buttons-B_z4IcSq.js",
     "name": "last-buttons",
     "imports": [
-      "_routing-DfImL_Nc.js"
+      "_routing-We9GwaGX.js"
     ]
   },
-  "_routing-DfImL_Nc.js": {
-    "file": "assets/routing-DfImL_Nc.js",
+  "_last-compatibility-CAk36TEy.js": {
+    "file": "assets/last-compatibility-CAk36TEy.js",
+    "name": "last-compatibility",
+    "imports": [
+      "_routing-We9GwaGX.js",
+      "_last-buttons-B_z4IcSq.js"
+    ]
+  },
+  "_routing-We9GwaGX.js": {
+    "file": "assets/routing-We9GwaGX.js",
     "name": "routing"
   },
+  "_top-BCBrT5DP.js": {
+    "file": "assets/top-BCBrT5DP.js",
+    "name": "top",
+    "imports": [
+      "_routing-We9GwaGX.js",
+      "_last-buttons-B_z4IcSq.js"
+    ]
+  },
+  "src/routes/index.tsx": {
+    "file": "assets/index-kWJFhkxd.js",
+    "name": "index",
+    "src": "src/routes/index.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "_routing-We9GwaGX.js",
+      "_top-BCBrT5DP.js",
+      "_last-buttons-B_z4IcSq.js"
+    ]
+  },
   "src/routes/index.tsx?pick=default&pick=$css": {
-    "file": "assets/index-DLF0rFfq.js",
+    "file": "assets/index-Bg5Af7mz.js",
     "name": "index",
     "src": "src/routes/index.tsx?pick=default&pick=$css",
     "isEntry": true,
+    "imports": [
+      "_routing-We9GwaGX.js",
+      "_top-BCBrT5DP.js",
+      "_last-buttons-B_z4IcSq.js"
+    ]
+  },
+  "src/routes/nens/[mbti].tsx": {
+    "file": "assets/_mbti_-CDXoK4sD.js",
+    "name": "_mbti_",
+    "src": "src/routes/nens/[mbti].tsx",
     "isDynamicEntry": true,
     "imports": [
-      "_routing-DfImL_Nc.js",
-      "_last-buttons-BOd4vf43.js"
+      "_routing-We9GwaGX.js",
+      "_last-compatibility-CAk36TEy.js",
+      "_last-buttons-B_z4IcSq.js"
     ]
   },
   "src/routes/nens/[mbti].tsx?pick=default&pick=$css": {
-    "file": "assets/_mbti_-CJ5hrj9s.js",
+    "file": "assets/_mbti_-CdRTjRh3.js",
     "name": "_mbti_",
     "src": "src/routes/nens/[mbti].tsx?pick=default&pick=$css",
     "isEntry": true,
-    "isDynamicEntry": true,
     "imports": [
-      "_routing-DfImL_Nc.js",
-      "_last-buttons-BOd4vf43.js"
+      "_routing-We9GwaGX.js",
+      "_last-compatibility-CAk36TEy.js",
+      "_last-buttons-B_z4IcSq.js"
     ]
   },
   "virtual:$vinxi/handler/client": {
-    "file": "assets/client-Dt913LB8.js",
+    "file": "assets/client-Pu7U_AhL.js",
     "name": "client",
     "src": "virtual:$vinxi/handler/client",
     "isEntry": true,
     "imports": [
-      "_routing-DfImL_Nc.js"
+      "_routing-We9GwaGX.js"
     ],
     "dynamicImports": [
-      "src/routes/index.tsx?pick=default&pick=$css",
-      "src/routes/nens/[mbti].tsx?pick=default&pick=$css"
+      "src/routes/index.tsx",
+      "src/routes/nens/[mbti].tsx"
     ],
     "css": [
       "assets/client-B1vpWYeC.css"
