@@ -1,5 +1,5 @@
-import { For, Show } from "solid-js";
-import { Nen, NENS, NEN_COMPATIBILITY_MAP } from "@/constants";
+import { For, Show, Accessor, createMemo } from "solid-js";
+import { Nen, NenEng, NENS, NEN_COMPATIBILITY_MAP } from "@/constants";
 import { PizaIcon } from "@/components/parts/icons";
 
 const exclude =
@@ -42,7 +42,42 @@ const rateColor = ({ rate }: { rate: `${number}%` }) => {
   return undefined;
 };
 
-export const LastCompatibility = ({ nenName }: { nenName: Nen }) => {
+export const LastCompatibility = ({
+  nenResult,
+}: {
+  nenResult: Accessor<
+    | {
+        nenName: Nen;
+        nenEngName: NenEng;
+        precisionRate: `${number}%`;
+      }
+    | undefined
+  >;
+}) => {
+  if (!nenResult()) {
+    return null;
+  }
+
+  const myNen = createMemo(() => nenResult()?.nenName);
+
+  // 自分以外の系統
+  const otherNens = createMemo<readonly Nen[]>(() => {
+    const m = myNen();
+    return m ? (NENS.filter((n) => n !== m) as readonly Nen[]) : [];
+  });
+
+  // 系統 → 相性率 のテーブル（1 回で計算）
+  const rateMap = createMemo(() => {
+    const m = myNen();
+    if (!m) return new Map<Nen, `${number}%`>();
+    return new Map<Nen, `${number}%`>(
+      otherNens().map((n) => [
+        n,
+        getRate({ myNen: m, nen: n as Exclude<Nen, typeof m> }),
+      ]),
+    );
+  });
+
   return (
     <div class="flex justify-center">
       <div class="flex flex-col w-5/6 p-6 lg:w-1/3 gap-4 lg:gap-14 rounded-2xl bg-black/30">
@@ -50,37 +85,39 @@ export const LastCompatibility = ({ nenName }: { nenName: Nen }) => {
           <PizaIcon />
           <span>他系統との相性</span>
         </div>
+
         <div class="flex flex-wrap justify-center gap-4">
-          <For each={NENS.filter(exclude(nenName))}>
-            {(nen) => (
-              <div
-                class={`flex flex-col w-5/6 lg:w-[30%] p-4 gap-1 rounded-xl ${rateColor({ rate: getRate({ myNen: nenName, nen }) })?.border} ${rateColor({ rate: getRate({ myNen: nenName, nen }) })?.background}`}
-              >
-                <div class="flex justify-between text-white/90">
-                  <div>{nen}</div>
-                  <div
-                    class={`${rateColor({ rate: getRate({ myNen: nenName, nen }) })?.text}`}
-                  >
-                    {getRate({ myNen: nenName, nen })}
+          <For each={otherNens()}>
+            {(nen) => {
+              const rate = rateMap().get(nen)!; // otherNens にしか回らないので必ず存在
+              const color = rateColor({ rate });
+              return (
+                <div
+                  class={`flex flex-col w-5/6 lg:w-[30%] p-4 gap-1 rounded-xl ${color?.border} ${color?.background}`}
+                >
+                  <div class="flex justify-between text-white/90">
+                    <div>{nen}</div>
+                    <div class={`${color?.text}`}>{rate}</div>
                   </div>
+
+                  <Show when={rate === "20%"}>
+                    <div class="w-full h-2 rounded-full bg-white/10">
+                      <div class="w-1/5 h-2 bg-red-600 rounded-full" />
+                    </div>
+                  </Show>
+                  <Show when={rate === "50%"}>
+                    <div class="w-full h-2 rounded-full bg-white/10">
+                      <div class="w-1/2 h-2 bg-blue-600 rounded-full" />
+                    </div>
+                  </Show>
+                  <Show when={rate === "80%"}>
+                    <div class="w-full h-2 rounded-full bg-white/10">
+                      <div class="w-3/4 h-2 bg-green-600 rounded-full" />
+                    </div>
+                  </Show>
                 </div>
-                <Show when={getRate({ myNen: nenName, nen }) === "20%"}>
-                  <div class="w-full h-2 rounded-full bg-white/10">
-                    <div class="w-1/5 h-2 bg-red-600 rounded-full"></div>
-                  </div>
-                </Show>
-                <Show when={getRate({ myNen: nenName, nen }) === "50%"}>
-                  <div class="w-full h-2 rounded-full bg-white/10">
-                    <div class="w-1/2 h-2 bg-blue-600 rounded-full"></div>
-                  </div>
-                </Show>
-                <Show when={getRate({ myNen: nenName, nen }) === "80%"}>
-                  <div class="w-full h-2 rounded-full bg-white/10">
-                    <div class="w-3/4 h-2 bg-green-600 rounded-full"></div>
-                  </div>
-                </Show>
-              </div>
-            )}
+              );
+            }}
           </For>
         </div>
       </div>

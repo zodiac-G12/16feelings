@@ -6,10 +6,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export default defineConfig({
-  ssr: true,
+  ssr: false,
   server: {
     baseURL: process.env.BASE_PATH,
-    preset: "vercel",
+    preset: "static",
   },
   vite: {
     resolve: {

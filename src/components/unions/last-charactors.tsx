@@ -1,8 +1,33 @@
-import { For } from "solid-js";
-import { NEN_CHARACTORS_MAP, Nen } from "@/constants";
+import { Accessor, For, createMemo } from "solid-js";
+import { NEN_CHARACTORS_MAP, Nen, NenEng } from "@/constants";
 import { PeoplesIcon, HumanWithCircleIcon } from "@/components/parts/icons";
 
-export const LastCharactors = ({ nenName }: { nenName: Nen }) => {
+export const LastCharactors = ({
+  nenResult,
+}: {
+  nenResult: Accessor<
+    | {
+        nenName: Nen;
+        nenEngName: NenEng;
+        precisionRate: `${number}%`;
+      }
+    | undefined
+  >;
+}) => {
+  if (!nenResult()) {
+    return null;
+  }
+
+  const charactorNames = createMemo(() => {
+    const nenName = nenResult()?.nenName;
+
+    if (!nenName) {
+      return [];
+    }
+
+    return NEN_CHARACTORS_MAP[nenName];
+  }, [nenResult]);
+
   return (
     <div class="flex justify-center">
       <div class="flex flex-col w-5/6 p-6 lg:w-1/3 gap-4 lg:gap-14 rounded-2xl bg-black/30">
@@ -11,7 +36,7 @@ export const LastCharactors = ({ nenName }: { nenName: Nen }) => {
           <span>同じ系統のキャラクター</span>
         </div>
         <div class="flex justify-center px-4 gap-2 lg:px-20 lg:gap-20">
-          <For each={NEN_CHARACTORS_MAP[nenName]}>
+          <For each={charactorNames()}>
             {(charactorName) => (
               <div class="flex flex-col items-center text-sm text-center gap-2 text-white/90">
                 <HumanWithCircleIcon />

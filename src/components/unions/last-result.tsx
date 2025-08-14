@@ -1,4 +1,4 @@
-import { Accessor, Show } from "solid-js";
+import { Accessor, createMemo, Show } from "solid-js";
 import { NEN_EXPLANATIONS_MAP, Nen, NenEng } from "@/constants";
 import { getMbtiName } from "@/logics";
 import {
@@ -14,42 +14,59 @@ export const LastResult = ({
   nenResult,
   mbti,
 }: {
-  nenResult: {
-    nenName: Nen;
-    nenEngName: NenEng;
-    precisionRate: `${number}%`;
-  };
+  nenResult: Accessor<
+    | {
+        nenName: Nen;
+        nenEngName: NenEng;
+        precisionRate: `${number}%`;
+      }
+    | undefined
+  >;
   mbti: Accessor<string>;
 }) => {
+  if (!nenResult()) {
+    return null;
+  }
+
+  const nenExplanation = createMemo(() => {
+    const nenName = nenResult()?.nenName;
+
+    if (!nenName) {
+      return "";
+    }
+
+    return NEN_EXPLANATIONS_MAP[nenName];
+  }, [nenResult, mbti]);
+
   return (
     <div class="flex justify-center">
       <div class="flex flex-col items-center w-5/6 px-4 py-4 border lg:pt-8 lg:pb-16 lg:px-8 lg:w-1/3 gap-4 lg:gap-6 border-purple-400/20 rounded-2xl bg-white/5">
         <div class="flex justify-center items-center shadow-[0px_25px_50px_0px_rgba(255,255,255,0.10)] rounded-full w-25 h-25 lg:w-32 lg:h-32 border-0 border-gray-200 bg-gradient-to-r from-[#6b46c1] to-[#6b21a8] bg-[linear-gradient(0deg,#6b46c1_0%,#6b21a8_100%)]">
-          <Show when={nenResult.nenName === "強化系"}>
+          <Show when={nenResult()?.nenName === "強化系"}>
             <StrengthIcon size="large" color="white" />
           </Show>
-          <Show when={nenResult.nenName === "放出系"}>
+          <Show when={nenResult()?.nenName === "放出系"}>
             <PaperIcon size="large" color="white" />
           </Show>
-          <Show when={nenResult.nenName === "変化系"}>
+          <Show when={nenResult()?.nenName === "変化系"}>
             <EyeIcon size="large" color="white" />
           </Show>
-          <Show when={nenResult.nenName === "具現化系"}>
+          <Show when={nenResult()?.nenName === "具現化系"}>
             <PenIcon size="large" color="white" />
           </Show>
-          <Show when={nenResult.nenName === "操作系"}>
+          <Show when={nenResult()?.nenName === "操作系"}>
             <BrainIcon size="large" color="white" />
           </Show>
-          <Show when={nenResult.nenName === "特質系"}>
+          <Show when={nenResult()?.nenName === "特質系"}>
             <HeartIcon size="large" color="white" />
           </Show>
         </div>
         <div class="flex flex-col items-center justify-center gap-2">
-          <h1 class="text-3xl font-bold lg:text-5xl">{nenResult.nenName}</h1>
-          <h2 class="text-lg lg:text-xl">{nenResult.nenEngName}</h2>
+          <h1 class="text-3xl font-bold lg:text-5xl">{nenResult()?.nenName}</h1>
+          <h2 class="text-lg lg:text-xl">{nenResult()?.nenEngName}</h2>
         </div>
         <div class="text-base break-all lg:text-lg rounded-2xl bg-white/10 p-7">
-          {NEN_EXPLANATIONS_MAP[nenResult.nenName]}
+          {nenExplanation()}
         </div>
         <div class="flex gap-4">
           <div class="break-keep rounded-xl bg-[#6b46c1]/20 py-2 px-4">
@@ -57,7 +74,7 @@ export const LastResult = ({
             <wbr />({getMbtiName(mbti())})
           </div>
           <div class="rounded-xl text-[#d4af37] bg-[#d4af37]/10 py-2 px-4">
-            適合率: {nenResult.precisionRate}
+            適合率: {nenResult()?.precisionRate}
           </div>
         </div>
         <div class="flex text-sm text-purple-200 gap-1">

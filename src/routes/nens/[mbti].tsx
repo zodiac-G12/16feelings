@@ -17,7 +17,7 @@ export default function Content() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const mbti = createMemo(() => params.mbti ?? "", [params]);
+  const mbti = createMemo(() => params.mbti ?? "", [params, location]);
 
   const nenResult = createMemo(() => {
     const m = mbti();
@@ -27,7 +27,7 @@ export default function Content() {
     }
 
     return MBTI_TO_NENS_MAP[m];
-  })();
+  }, [mbti, params, location]);
 
   const getThisUrl = () => {
     // SSRでも安全に動作
@@ -45,9 +45,12 @@ export default function Content() {
 
   const thisUrl = getThisUrl();
 
-  const postSentense = `あなたの念系統は${nenResult?.nenName}！${nenResult?.nenName ? NEN_EXPLANATIONS_MAP[nenResult.nenName].split("。").slice(0, -2).join("。") + "。" : ""}`;
+  const nenName = nenResult() ? nenResult()?.nenName : "";
+  const nenExplanation = nenName ? NEN_EXPLANATIONS_MAP[nenName] : "";
 
-  if (!nenResult) {
+  const postSentense = `あなたの念系統は${nenName}！${nenExplanation ? nenExplanation.split("。").slice(0, -2).join("。") + "。" : ""}`;
+
+  if (nenResult() === undefined) {
     navigate("/404");
     return null;
   }
@@ -59,8 +62,8 @@ export default function Content() {
         <LastTop />
         <LastResultPrefix />
         <LastResult mbti={mbti} nenResult={nenResult} />
-        <LastCharactors nenName={nenResult.nenName} />
-        <LastCompatibility nenName={nenResult.nenName} />
+        <LastCharactors nenResult={nenResult} />
+        <LastCompatibility nenResult={nenResult} />
         <LastButtons
           thisUrl={thisUrl}
           postSentense={postSentense}
